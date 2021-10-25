@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
+import toast from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import { useAddContactMutation } from '../../redux/contacts/contacts-slice';
 import { useFetchContactsQuery } from '../../redux/contacts/contacts-slice';
@@ -12,7 +13,9 @@ export const Form = () => {
   const { data: contacts } = useFetchContactsQuery();
   const [addContact, { isLoading }] = useAddContactMutation();
 
-  const onSubmit = ({ name, number }) => addContact({ name, number });
+  const onSubmit = ({ name, number }) => {
+    addContact({ name, number });
+  };
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -22,7 +25,7 @@ export const Form = () => {
     setContactCred(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const { name } = contactCred;
 
@@ -35,6 +38,7 @@ export const Form = () => {
       return;
     }
     onSubmit(contactCred);
+    toast.success('Контакт добавлен!');
     resetState();
   };
 

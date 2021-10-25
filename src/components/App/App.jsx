@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { Form } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
@@ -41,6 +42,7 @@ export const App = () => {
         <Filter value={filter} onChange={changeFilter} />
         {contacts && <ContactList contacts={getFilteredContacts()} />}
       </Title>
+      <Toaster position="top-right" />
     </Container>
   );
 };
