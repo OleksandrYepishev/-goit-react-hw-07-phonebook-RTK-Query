@@ -12,7 +12,9 @@ export const ContactItem = ({ contact: { id, name, number } }) => {
       <span>{name}:</span> <span>{number}</span>
       <Button
         type="button"
-        onClick={() => deleteContact(id) && toast.success('Контакт удален!')}
+        onClick={() =>
+          deleteContact(id) && toast.success(`Контакт ${name} удален!`)
+        }
       >
         {isDeleting ? 'Deleting...' : 'Delete'}
       </Button>

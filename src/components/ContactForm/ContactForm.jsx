@@ -38,7 +38,7 @@ export const Form = () => {
       return;
     }
     onSubmit(contactCred);
-    toast.success('Контакт добавлен!');
+    toast.success(`Контакт ${name} успешно добавлен!`);
     resetState();
   };
 
