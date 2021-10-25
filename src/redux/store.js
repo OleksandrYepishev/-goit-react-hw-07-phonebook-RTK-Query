@@ -1,9 +1,16 @@
-import { configureStore} from '@reduxjs/toolkit';
-import phohebookReducer from '../redux/contacts/contacts-reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { contactsApi } from '../redux/contacts/contacts-slice'
+
 
 export const store = configureStore({
   reducer: {
-    phonebook:  phohebookReducer,
+    [contactsApi.reducerPath]: contactsApi.reducer,
   },
-    devTools: process.env.NODE_ENV === 'development',
-  });
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    contactsApi.middleware,
+  ],
+});
+
+setupListeners(store.dispatch);

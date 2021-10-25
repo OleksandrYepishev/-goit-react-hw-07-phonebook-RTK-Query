@@ -1,37 +1,21 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import useDebounce from '../../Hooks/debounce-hook';
-import {
-  deleteContact,
-  fetchContacts,
-} from '../../redux/contacts/contacts-operations';
-import { getFilteredContacts } from '../../redux/contacts/contacts-selectors';
-
+import { useDeleteContactMutation } from '../../redux/contacts/contacts-slice';
 import { List, Item, Button } from './ContactList.styled';
 
-export const ContactList = () => {
-  const FilteredContacts = useSelector(getFilteredContacts);
-
-  const dispatch = useDispatch();
-  const onDeleteContact = id => dispatch(deleteContact(id));
-
-  const debouncedFilteredContacts = useDebounce(FilteredContacts, 500);
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+export const ContactList = ({ contacts }) => {
+  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
 
   return (
     <List>
-      {debouncedFilteredContacts.map(({ id, name, number }) => (
-        <Item key={id}>
-          <span>{name}:</span> <span>{number}</span>
-          <Button type="button" onClick={() => onDeleteContact(id)}>
-            Delete
-          </Button>
-        </Item>
-      ))}
+      {contacts &&
+        contacts.map(({ id, name, number }) => (
+          <Item key={id}>
+            <span>{name}:</span> <span>{number}</span>
+            <Button type="button" onClick={() => deleteContact(id)}>
+              {isDeleting ? 'Deleting...' : 'Delete'}
+            </Button>
+          </Item>
+        ))}
     </List>
   );
 };

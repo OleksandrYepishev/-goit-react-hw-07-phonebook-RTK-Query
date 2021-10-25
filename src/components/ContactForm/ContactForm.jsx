@@ -1,21 +1,18 @@
 import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
-import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as contactsOperation from '../../redux/contacts/contacts-operations';
-import { getContacts } from '../../redux/contacts/contacts-selectors';
+import { useAddContactMutation } from '../../redux/contacts/contacts-slice';
+import { useFetchContactsQuery } from '../../redux/contacts/contacts-slice';
 import { ImUsers, ImProfile, ImPhone } from 'react-icons/im';
-
 import { ContactForm, Label, Input, Button } from './ContactForm.styled';
 const initialState = { name: '', number: '' };
 
 export const Form = () => {
   const [contactCred, setContactCred] = useState(initialState);
-  const contacts = useSelector(getContacts);
-  const dispatch = useDispatch();
+  const { data: contacts } = useFetchContactsQuery();
+  const [addContact, { isLoading }] = useAddContactMutation();
 
-  const onSubmit = ({ name, number }) =>
-    dispatch(contactsOperation.addContact({ name, number }));
+  const onSubmit = ({ name, number }) => addContact({ name, number });
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -78,7 +75,7 @@ export const Form = () => {
 
       <Button type="submit">
         <ImUsers style={{ marginRight: 10 }} />
-        Add contact
+        {isLoading ? 'Adding contcact..' : 'Add contact'}
       </Button>
     </ContactForm>
   );
