@@ -1,4 +1,18 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSlice } from '@reduxjs/toolkit';
+
+const ContactsFilterSlice = createSlice({
+  name: 'filter',
+  initialState: { filter: '' },
+  reducers: {
+    changeFilter(state, action) {
+      state.filter = action.payload;
+    },
+  },
+});
+
+export const { changeFilter } = ContactsFilterSlice.actions;
+export const contactsFilterReducer = ContactsFilterSlice.reducer;
 
 export const contactsApi = createApi({
   reducerPath: 'contactApi',

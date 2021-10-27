@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 import PropTypes from 'prop-types';
-import { useAddContactMutation } from '../../redux/contacts/contacts-slice';
-import { useFetchContactsQuery } from '../../redux/contacts/contacts-slice';
+import {
+  useAddContactMutation,
+  useFetchContactsQuery,
+} from '../../redux/contacts/contacts-slice';
 import { ImUsers, ImProfile, ImPhone } from 'react-icons/im';
 import { ContactForm, Label, Input, Button } from './ContactForm.styled';
 const initialState = { name: '', number: '' };
