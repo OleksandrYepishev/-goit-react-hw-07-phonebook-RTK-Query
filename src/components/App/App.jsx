@@ -4,10 +4,8 @@ import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
 import { Container } from '../Container/Container';
 import { Title } from './App.styled';
-import { useFetchContactsQuery } from '../../redux/contacts/contacts-slice';
 
 export const App = () => {
-  const { data: contacts } = useFetchContactsQuery();
   return (
     <Container>
       <Title>
@@ -17,7 +15,7 @@ export const App = () => {
       <Title>
         Contacts
         <Filter />
-        {contacts && <ContactList contacts={contacts} />}
+        <ContactList />
       </Title>
       <Toaster position="top-right" />
     </Container>

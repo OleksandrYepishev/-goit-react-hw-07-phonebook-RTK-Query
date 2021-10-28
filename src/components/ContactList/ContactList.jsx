@@ -7,21 +7,24 @@ import {
   getFilter,
   getFilteredContacts,
 } from '../../redux/contacts/contacts-selectors';
+import { useFetchContactsQuery } from '../../redux/contacts/contacts-slice';
 import { List } from './ContactList.styled';
 
-export const ContactList = ({ contacts }) => {
+export const ContactList = () => {
+  const { data: contacts } = useFetchContactsQuery();
   const filter = useSelector(getFilter);
   const debouncedFilter = useDebounce(filter, 500);
 
   const filteredContacts = useMemo(() => {
-    return getFilteredContacts(contacts, debouncedFilter);
+    return contacts && getFilteredContacts(contacts, debouncedFilter);
   }, [contacts, debouncedFilter]);
 
   return (
     <List>
-      {filteredContacts.map(contact => (
-        <ContactItem key={contact.id} contact={contact} />
-      ))}
+      {filteredContacts &&
+        filteredContacts.map(contact => (
+          <ContactItem key={contact.id} contact={contact} />
+        ))}
     </List>
   );
 };

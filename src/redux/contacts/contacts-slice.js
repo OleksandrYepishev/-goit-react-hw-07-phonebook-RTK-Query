@@ -5,8 +5,8 @@ const ContactsFilterSlice = createSlice({
   name: 'filter',
   initialState: { filter: '' },
   reducers: {
-    changeFilter(state, action) {
-      state.filter = action.payload;
+    changeFilter(state, payload) {
+      state.filter = payload;
     },
   },
 });
